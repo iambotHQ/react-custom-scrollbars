@@ -1,6 +1,7 @@
 import raf, { cancel as caf } from 'raf';
 import css from 'dom-css';
 import { Component, createElement, cloneElement } from 'react';
+import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 
 import isString from '../utils/isString';
@@ -72,6 +73,7 @@ export default class Scrollbars extends Component {
     }
 
     componentDidMount() {
+        this.ownerDocument = findDOMNode(this).ownerDocument;
         this.addListeners();
         this.update();
         this.componentDidMountUniversal();
@@ -324,16 +326,20 @@ export default class Scrollbars extends Component {
 
     setupDragging() {
         css(document.body, disableSelectStyle);
-        document.addEventListener('mousemove', this.handleDrag);
-        document.addEventListener('mouseup', this.handleDragEnd);
-        document.onselectstart = returnFalse;
+        if (this.ownerDocument) {
+            this.ownerDocument..addEventListener('mousemove', this.handleDrag);
+            this.ownerDocument..addEventListener('mouseup', this.handleDragEnd);
+            this.ownerDocument..onselectstart = returnFalse;
+        }
     }
 
     teardownDragging() {
         css(document.body, disableSelectStyleReset);
-        document.removeEventListener('mousemove', this.handleDrag);
-        document.removeEventListener('mouseup', this.handleDragEnd);
-        document.onselectstart = undefined;
+        if (this.ownerDocument) {
+            this.ownerDocument.removeEventListener('mousemove', this.handleDrag);
+            this.ownerDocument.removeEventListener('mouseup', this.handleDragEnd);
+            this.ownerDocument.onselectstart = undefined;
+        }
     }
 
     handleDragStart(event) {
