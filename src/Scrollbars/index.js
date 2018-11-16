@@ -327,9 +327,9 @@ export default class Scrollbars extends Component {
     setupDragging() {
         css(document.body, disableSelectStyle);
         if (this.ownerDocument) {
-            this.ownerDocument..addEventListener('mousemove', this.handleDrag);
-            this.ownerDocument..addEventListener('mouseup', this.handleDragEnd);
-            this.ownerDocument..onselectstart = returnFalse;
+            this.ownerDocument.addEventListener('mousemove', this.handleDrag);
+            this.ownerDocument.addEventListener('mouseup', this.handleDragEnd);
+            this.ownerDocument.onselectstart = returnFalse;
         }
     }
 
